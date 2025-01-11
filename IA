@@ -1,0 +1,355 @@
+import re
+
+class CraftMyPDFConsultant:
+    def __init__(self):
+        self.knowledge = {
+            "introducao": {
+                 "o que é craftmypdf?": {
+                    "keywords": ["craftmypdf", "editor de pdf", "templates", "documentos pdf", "arrastar e soltar"],
+                    "response": "CraftMyPDF é um editor de modelos de PDF baseado na web que permite criar templates e gerar documentos PDF perfeitos em pixels a partir de modelos reutilizáveis. Ele oferece uma interface de arrastar e soltar e muitos recursos para criar PDFs dinâmicos."
+                },
+                 "recursos do editor de pdf": {
+                    "keywords": ["editor de pdf", "layout", "componentes", "expressões", "formatação", "quebras de página", "vinculação de dados"],
+                    "response": "O editor inclui um rico conjunto de layout e componentes, expressões poderosas, formatação, quebras de página e vinculação de dados."
+                },
+                "integração com outras plataformas": {
+                    "keywords": ["api rest", "zapier", "make.com", "bubble.io", "automação", "fluxos de trabalho"],
+                    "response": "O CraftMyPDF tem uma API REST e se integra com plataformas sem código como Zapier, Make.com (Integromat) e Bubble.io para automatizar a criação de documentos PDF."
+                }
+            },
+            "fluxo de trabalho do design":{
+                  "visão geral do design": {
+                    "keywords": ["craftmypdf", "documentos pdf", "templates", "dados dinâmicos", "personalizar"],
+                    "response": "Com o CraftMyPDF, você pode criar facilmente modelos de PDF personalizados e preenchê-los com dados dinâmicos."
+                },
+                "etapa 1: preparar dados json": {
+                    "keywords": ["dados json", "guia dados", "esquema json", "expression builder", "visualizar em pdf"],
+                     "response": "É crucial ter seus dados JSON preparados antes de começar o design. Os dados na aba Dados servem como amostra para o Expression Builder e para visualização em PDF."
+                },
+                "etapa 2: criar o modelo": {
+                    "keywords": ["guia designer", "layout", "personalizar", "expressões", "chaves duplas", "dados json"],
+                    "response": "Use a guia Designer para personalizar o layout e a aparência do documento. Você pode empregar expressões entre chaves duplas `{{ }}` para usar dados JSON."
+                },
+                 "etapa 3: visualizar o modelo com dados de amostra": {
+                    "keywords": ["guia visualizar", "depurar expressões", "gerar pdf", "pdf real", "visualizar em html"],
+                    "response": "Use a guia Visualizar para ver o PDF em HTML ou gerar um PDF real, com quebras de página, cabeçalhos e números de página."
+                },
+                "etapa 4: integrar e automatizar a geração de pdf":{
+                   "keywords": ["integração", "zapier", "make.com", "api rest", "automatizar"],
+                   "response": "Integre o CraftMyPDF com plataformas como Zapier, Make.com ou use a API REST para automatizar a geração de PDFs em seus fluxos de trabalho."
+               }
+            },
+            "componentes do editor de modelos": {
+                "guia designer":{
+                   "keywords": ["arrastar e soltar", "barra de ferramentas", "componentes", "data fields", "camadas", "seções"],
+                   "response": "A guia Designer permite arrastar e soltar componentes na área do editor, usar Data Fields para criar componentes automaticamente, gerenciar camadas e organizar seu layout em seções."
+                },
+                "painel de ferramentas":{
+                    "keywords": ["texto/rótulo", "imagem", "qr code", "data fields", "componentes visuais"],
+                    "response": "O painel de ferramentas oferece componentes de texto/rótulo, imagem, QR Code e Data Fields, para adicionar diversos tipos de conteúdo ao seu PDF."
+                },
+                "áreas do editor (seções)":{
+                    "keywords": ["cabeçalho", "rodapé", "seção normal", "dados do relatório", "seções e vinculação de dados"],
+                    "response": "O editor tem as seções de cabeçalho (topo da página), rodapé (parte inferior) e seção normal (corpo do relatório). A seção normal pode ser usada para exibir dados vinculados."
+                },
+                  "painel de propriedade":{
+                   "keywords": ["atributos", "objetos", "controles", "personalizar", "propriedades dos componentes"],
+                   "response": "O painel de propriedades permite personalizar atributos de objetos e controles selecionados em seus modelos."
+                },
+                  "guia de visualização": {
+                   "keywords": ["visualizar pdf", "depurar", "expressões", "visualizar em html"],
+                   "response":"A guia de visualização é onde você pode visualizar o PDF e depurar quaisquer expressões que você tenha usado."
+                },
+                "aba de dados":{
+                    "keywords":["dados json", "visualizar template", "dados de amostra"],
+                    "response":"A aba de dados mostra os dados JSON de exemplo que foram usados para visualizar seu template."
+                },
+                "guia de configurações":{
+                    "keywords": ["formato do papel", "tamanho", "orientação", "margens", "plano de fundo", "marca d'água", "fontes personalizadas", "css personalizado", "javascript"],
+                    "response":"A guia de configurações permite que você configure o formato do papel, margens, nome do modelo, CSS personalizado, plano de fundo e outros elementos do seu modelo."
+                }
+             },
+           "expressões": {
+                "noções básicas de expressões": {
+                    "keywords": ["sintaxe javascript", "variáveis", "operadores", "avaliação de valores"],
+                    "response": "Uma expressão é uma sintaxe JavaScript em chaves duplas `{{ }}` que avalia um único valor, podendo ser um número, texto ou valor lógico."
+                },
+                "exemplos de expressões": {
+                    "keywords": ["adição", "exibir texto", "campos json", "operador condicional", "ternário"],
+                    "response":"Alguns exemplos incluem: `{{ 1 + 1 }}` (adição), `{% \"olá\" %}` (exibir texto), `{{ dados.título }}` (exibir campo JSON) e  `{{ data.status == 2 ? \"Pendente\" : \"Desconhecido\" }}` (operador ternário)."
+                },
+               "bibliotecas suportadas": {
+                    "keywords": ["javascript padrão", "numeral.js", "moment.js", "funções internas do craftmypdf"],
+                    "response":"O CraftMyPDF suporta as bibliotecas JavaScript padrão, Numeral.js, Moment.js, e possui funções internas para formatação, número e texto."
+                },
+                "exibindo dados com expressões":{
+                   "keywords": ["dados json", "construtor de expressão", "pré-visualizar o pdf"],
+                   "response":"Os dados JSON na aba Data são uma amostra que permite pré-visualizar o modelo. Você precisa substituí-los pelos seus dados para a geração real do PDF."
+                },
+                "como usar dados json com expressões":{
+                    "keywords": ["propriedades", "expressões de suporte", "dados json"],
+                    "response":"Para usar dados JSON com expressões procure por propriedades que suportam expressões. Use a sintaxe `{{ dados.[campo] }}` para acessar os dados JSON."
+                },
+                "construindo uma expressão com o expression builder":{
+                     "keywords": ["inserir expressão de dados", "construtor de expressões"],
+                    "response": "Selecione o propósito da expressão, escolha um campo JSON que você deseja exibir, determine como você deseja formatar o campo e verifique a expressão antes de clicar em 'Usar isto'."
+               }
+            },
+            "vinculação de dados e seções normais":{
+                "introdução à vinculação de dados": {
+                     "keywords": ["data binding", "repetição dinâmica", "seções normais", "dados subjacentes"],
+                    "response": "A vinculação de dados permite repetir uma seção dinamicamente com base nos dados subjacentes."
+                },
+                 "etapas para habilitar a vinculação de dados":{
+                     "keywords": ["matriz de dados", "data binding", "expressão", "data source"],
+                    "response": "Habilite a opção Data Binding em uma seção normal. Use uma expressão na propriedade Data Source para especificar a matriz a ser usada."
+               },
+                 "elementos dentro da seção vinculada a dados":{
+                   "keywords": ["variáveis de linha", "expressões", "campos json"],
+                   "response": "Use a sintaxe `{{ linha.[campo] }}` nas propriedades dos componentes dentro da seção para acessar dados de cada item da matriz."
+               },
+                "variáveis especiais em uma seção vinculada a dados":{
+                  "keywords":["row", "rowIndex", "lógica personalizada", "números de linha"],
+                    "response": "`row` representa o registro atual sendo processado e `rowIndex` é o índice da linha atual."
+                 },
+                 "filtrando e classificando uma matriz": {
+                  "keywords": ["filter", "sort", "matriz", "condição", "ordenação"],
+                  "response": "Use `{{array.filter((var)=>condição)}}` para filtrar e  `{{array.sort((comp1,comp2)=>condição)}}` para ordenar. Métodos integrados como `sort(field, array, direction)` também estão disponíveis."
+                 }
+            },
+            "variáveis e funções específicas": {
+                 "variáveis para cabeçalho e rodapé": {
+                     "keywords": ["sys.pagenumber", "sys.totalpages", "números de página"],
+                    "response":"Use `sys.pageNumber` para exibir o número da página atual e `sys.totalPages` para o número total de páginas."
+                },
+                 "variáveis em subseções": {
+                     "keywords": ["row", "parent", "parents", "dados aninhados"],
+                    "response":"Use `row` para acessar os dados da linha, `parent` para acessar os dados do pai e `parents` para acessar todos os pais aninhados."
+               },
+                "modo de subseção":{
+                    "keywords": ["modo de subseção", "editar subseção", "seções dentro de seções"],
+                    "response": "Para entrar no modo de subseção, clique duas vezes na subseção ou clique no botão “Edit Subsection”."
+                }
+             },
+            "formatação e exibição":{
+                 "quebras de página para o componente seção": {
+                    "keywords": ["quebrar dentro", "quebrar depois", "evitar quebra de página"],
+                    "response": "Use a propriedade “Quebrar Dentro” para controlar se a seção deve quebrar a página ou não e o “Quebrar Depois” para forçar uma quebra de página após a seção."
+                },
+                 "modos de layout para seção":{
+                    "keywords": ["layout relativo", "fluxo vertical"],
+                    "response": "Em “Relativo” você pode arrastar os elementos na tela como quiser, enquanto em 'Fluxo Vertical' os elementos são posicionados de acordo com o fluxo normal do documento."
+                },
+                 "organizar elementos horizontalmente em uma seção de fluxo vertical": {
+                  "keywords": ["inline", "bloco inline", "fluxo vertical"],
+                  "response": "Defina o tipo 'Inline' dos elementos para 'Bloco Inline' para organizá-los horizontalmente em uma seção de fluxo vertical."
+                },
+                  "propriedades substituíveis":{
+                    "keywords": ["vinculação de propriedade", "estilos do componente", "propriedades dinâmicas"],
+                    "response": "As propriedades substituíveis permitem que você modifique diretamente as propriedades dos componentes, como tamanho da fonte, cor, rotação etc., durante a geração do PDF."
+                  },
+                "manipulando valor 'indefinido'": {
+                   "keywords":["ifnull", "tratamento de valor indefinido", "valor default"],
+                   "response":"Utilize a função `ifNull` para substituir um valor indefinido por um valor default ou utilize a opção “Tratamento de Valor Indefinido” para suprimir esses valores."
+                },
+                 "usando uma imagem base64 em um pdf":{
+                  "keywords": ["url de dados", "expressões", "imagem base64"],
+                  "response":"Use a propriedade Src com uma expressão que gera uma URL de dados base64."
+                 }
+            },
+            "componentes preenchíveis e de formulário":{
+                "componente de caixa de texto": {
+                  "keywords": ["entrada de texto", "valores numéricos", "campos designados"],
+                   "response": "Permite que os usuários insiram texto ou valores numéricos dentro de um campo."
+                 },
+                 "componente de caixa de seleção":{
+                   "keywords":["seleção", "desmarcar", "booleano"],
+                    "response":"Permite que os usuários selecionem ou desmarquem uma opção."
+                 },
+                "componente suspenso": {
+                  "keywords": ["menu suspenso", "lista de opções"],
+                  "response":"Permite que os usuários selecionem uma única opção de uma lista predefinida."
+                  },
+                   "componente da lista de opções": {
+                     "keywords": ["campos de formulário", "pesquisa"],
+                      "response":"Permite que os usuários selecionem uma ou mais opções de uma lista predefinida."
+                     },
+                 "componente de botão de rádio": {
+                    "keywords": ["seleções exclusivas", "grupos de botões de rádio"],
+                   "response": "Permite que os usuários selecionem uma opção de um conjunto exclusivo, desmarcando as outras opções dentro do mesmo grupo."
+                },
+                "componente de botão": {
+                     "keywords": ["acionadores", "formulários", "executar funções", "javascript", "interatividade"],
+                      "response":"Permite que usuários acionem ações em um PDF, como enviar um formulário, iniciar cálculos ou executar funções Javascript."
+                },
+                "componente de assinatura":{
+                   "keywords": ["assinaturas digitais", "assinaturas eletrônicas", "verificar a identidade"],
+                    "response":"O componente permite adicionar assinaturas digitais ou eletrônicas a um PDF para verificar a identidade do signatário e garantir a integridade do documento."
+                }
+             },
+            "componentes avançados":{
+                 "componente de gráfico":{
+                    "keywords": ["gráficos de linha", "área", "barras", "pizza", "rosca", "dados dinâmicos", "apexcharts"],
+                    "response":"Existem os tipos de gráfico de linha, área, barras, pizza e rosca, com suporte a dados dinâmicos e ApexCharts."
+                },
+                "extraindo dados de json como uma matriz unidimensional":{
+                    "keywords": ["asarray", "arrays", "extrair dados"],
+                    "response": "Use a função `asArray` para extrair os valores de um campo dentro de uma matriz."
+                },
+                 "usando apexcharts":{
+                    "keywords": ["personalizar gráficos", "opções apexcharts"],
+                    "response":"Você pode usar as opções do ApexCharts na propriedade 'Options' do componente de gráfico para personalizar a aparência e o comportamento do gráfico."
+                 },
+                 "componente de tabela simples":{
+                    "keywords": ["exibir dados", "formato tabular", "linhas repetidas"],
+                     "response":"Serve para exibir dados no formato tabular, exibindo linhas repetidas sem a necessidade de uma seção normal vinculada a dados."
+                    },
+                 "componente de subseção":{
+                   "keywords": ["subcabeçalho", "subrodapé", "seção subnormal", "aninhamento de componentes"],
+                   "response":"Serve para criar repetição de linhas em um array e tem subcabeçalho, subrodapé e subnormal. Pode ser combinado com uma seção, ele permite que você itere por um JSON hierárquico complexo."
+                  },
+                 "componente de área": {
+                    "keywords": ["agrupar", "múltiplos componentes"],
+                    "response":"A função do componente de área é agrupar múltiplos componentes, funcionando como uma subseção, mas não inclui um cabeçalho ou rodapé."
+                },
+                "componente html": {
+                   "keywords": ["código html", "css", "wysiwyg", "conteúdo dinâmico", "expressões", "raw html"],
+                   "response":"O componente permite usar HTML e CSS. Um editor WYSIWYG está disponível para editar o código ou utilizar a propriedade 'Raw HTML Content' para conteúdo HTML bruto."
+                  },
+                  "suporte de expressões no componente html": {
+                    "keywords": ["inserir expressão", "conteúdo dinâmico"],
+                    "response":"Use o botão 'Insert Expression' para adicionar conteúdo dinâmico dentro de seu HTML."
+                 },
+                 "css no componente html":{
+                    "keywords": ["css em linha", "css interno", "css personalizado", "estilos"],
+                    "response":"Use CSS em linha através do atributo `style`, coloque estilos em uma tag `style` ou use CSS personalizado na guia de configurações."
+                   },
+                "carregando conteúdo html externo": {
+                    "keywords": ["url remota", "conteúdo html", "expressões"],
+                    "response":"Use a propriedade 'Load HTML Content From A URL' para carregar o HTML de uma URL externa."
+                 }
+            },
+            "funções específicas (strings, números, datas e lógicas)": {
+                "funções de string (maiúsculas, minúsculas, énulouvazio, senulo e truncarstring)": {
+                     "keywords": ["string", "uppercase", "lowercase", "isnullorempty", "ifnull", "truncatestring"],
+                    "response":"As funções incluem `maiúsculas` (para letras maiúsculas), `minúsculas` (para letras minúsculas), `éNuloOuVazio` (verifica se uma string é nula ou vazia), `seNulo` (retorna um valor default caso a string seja nula) e  `truncarString` (corta uma string até um determinado tamanho)."
+                },
+                "funções numéricas (max, min, soma, somaarray, média, contar)": {
+                   "keywords": ["max", "min", "sum", "sumarray", "avg", "count", "operações numéricas"],
+                    "response":"As funções incluem `max` (para o maior valor), `min` (para o menor valor), `soma` (para a soma de valores), `somaArray` (soma de valores em uma matriz), `média` (para o valor médio) e `contar` (para o comprimento de uma matriz)."
+                 },
+                "funções de formato de data e hora": {
+                   "keywords": ["format", "formatar data", "momentjs"],
+                   "response": "Utilize a função `format()` e as bibliotecas `momentjs` para criar formatos específicos."
+                 },
+                  "funções lógicas (iif, miif)": {
+                     "keywords": ["iif", "miif", "operadores condicionais"],
+                     "response":"Utilize a função `iif` para retornar um valor dependendo de uma condição (if, else) ou utilize a função `miif` para múltiplas condições."
+                 },
+                 "obter valor": {
+                     "keywords": ["getvalue", "campos json", "valores default"],
+                     "response":"Utilize a função `getValue` para extrair dados de um objeto JSON e retornar o valor ou um valor default caso ele seja nulo ou indefinido."
+                 },
+                 "blocos de função para lógica complexa":{
+                    "keywords": ["blocos de código", "javascript", "expressões"],
+                    "response": "Utilize blocos de código JavaScript em expressões entre `{% %}` ou `{{ }}` para operações mais avançadas."
+                 }
+            },
+            "automação e integração": {
+                "automação zapier":{
+                     "keywords": ["zaps", "craftmypdf", "criação de pdf", "gatilhos", "ações", "api"],
+                    "response": "Você pode criar Zaps no Zapier que usam o CraftMyPDF como um aplicativo para criar PDFs automaticamente."
+                },
+                 "etapas para automatizar geração de pdf com zapier":{
+                     "keywords": ["criar pdf", "vincular conta", "tipo de carga", "etapas do zap"],
+                    "response": "Você precisa escolher o CraftMyPDF como app, selecionar 'Criar PDF' como evento, vincular sua conta, escolher um modelo e definir o tipo de carga útil."
+                 },
+                 "automação make.com":{
+                     "keywords": ["make", "automação", "integração", "geração de pdfs", "gatilhos", "api"],
+                     "response":"Você pode usar o Make.com para criar cenários que automatizam a geração de PDF com o CraftMyPDF."
+                },
+                   "etapas para automatizar a geração de pdf com make.com":{
+                       "keywords": ["gatilho", "criar ação", "aplicativo craftmypdf", "modelos"],
+                     "response":"Defina o gatilho, crie uma ação no CraftMyPDF, selecione 'Criar PDF', vincule sua conta e selecione o tipo de carga útil."
+                  },
+                  "pontos de extremidade da api regional":{
+                      "keywords":["endpoints", "api regional", "tempo de resposta", "segurança de dados", "gdpr", "limitações"],
+                    "response":"É um endpoint otimizado para atender clientes de uma região específica, garantindo melhor tempo de resposta, conformidade regulatória e segurança de dados."
+                },
+                  "onde os dados são armazenados":{
+                    "keywords": ["amazon web services", "aws s3", "segurança", "privacidade", "gdpr"],
+                   "response":"Os dados são armazenados em servidores da Amazon Web Services (AWS S3), garantindo segurança e privacidade."
+                }
+             },
+            "outros recursos": {
+                "acessar os pdfs gerados": {
+                    "keywords": ["url pré-assinada", "download direto", "armazenamento próprio", "segurança"],
+                    "response":"Há opções de URL pré-assinada da AWS, download direto do binário do PDF ou seu próprio armazenamento na AWS."
+                },
+               "como reduzir o tamanho do arquivo pdf":{
+                   "keywords":["imagens raster", "pré-processar imagens", "reamostragem raster", "api rest", "otimizar"],
+                   "response":"Utilize o componente de imagem para pré-processar as imagens raster ou a opção de reamostragem raster na API REST."
+                 },
+                "componentes preenchíveis": {
+                   "keywords": ["caixa de texto", "caixa de seleção", "lista de opções", "botões de rádio", "botões"],
+                    "response": "Existem componentes como caixa de texto, caixa de seleção, lista de opções e botões, para permitir que usuários interajam e insiram dados diretamente no PDF."
+                 },
+                "componente de assinatura":{
+                   "keywords": ["assinaturas digitais", "assinaturas eletrônicas"],
+                   "response":"O componente permite adicionar assinaturas digitais ou eletrônicas a um PDF para verificar a identidade do signatário e garantir a integridade do documento."
+                },
+                "equipes":{
+                   "keywords": ["espaço de trabalho", "templates de equipe", "chave de api da equipe", "membros da equipe"],
+                    "response":"O recurso permite colaboração, compartilhamento e gerenciamento de templates. As equipes têm um repositório de templates, uma chave de API exclusiva e permite que seus membros trabalhem de forma colaborativa."
+                 },
+                 "alternando entre equipes e meu espaço de trabalho":{
+                     "keywords": ["espaço de trabalho", "equipes", "alternar"],
+                    "response":"Utilize o menu dropdown na barra de navegação superior para alternar."
+                },
+                "criar uma nova equipe": {
+                    "keywords": ["criar equipe"],
+                    "response":"Utilize o menu 'Equipe' e clique em 'Adicionar uma nova equipe'."
+                },
+                  "atualizar nome e descrição da equipe":{
+                    "keywords": ["nome", "descrição", "configurações da equipe"],
+                    "response":"Edite os campos na tela de configurações da equipe."
+                 },
+                 "enviar convites":{
+                     "keywords": ["convites", "membros", "papéis"],
+                     "response": "Use a seção 'Enviar Convites' na página de configurações da equipe e selecione um papel para cada membro a ser convidado."
+                 },
+                "gerenciar permissões de equipe":{
+                    "keywords":["permissões", "usuário e permissões", "ativar e desabilitar"],
+                    "response":"Na seção 'Usuários e permissões da equipe' você pode ver os membros e suas permissões, habilite ou desabilite as opções e clique em 'Update Team Access'."
+                },
+                  "zona de perigo":{
+                    "keywords": ["zona de perigo", "excluir equipe", "transferir equipe"],
+                   "response": "Permite excluir ou transferir a equipe, porém apenas o proprietário da conta tem acesso."
+                 },
+                 "como funciona uma assinatura":{
+                   "keywords": ["modelos de assinatura", "alocação mensal", "ciclo de pagamento"],
+                   "response":"O CraftMyPDF opera com um modelo de assinatura mensal."
+                }
+             }
+        }
+
+    def _find_best_match(self, question):
+        question = question.lower()
+        best_match = None
+        max_matches = 0
+
+        for topic, subtopics in self.knowledge.items():
+            for subtopic, data in subtopics.items():
+                keywords = data["keywords"]
+                matches = sum(1 for keyword in keywords if re.search(r'\b' + re.escape(keyword) + r'\b', question))
+                if matches > max_matches:
+                   max_matches = matches
+                   best_match = data["response"]
+        return best_match
+
+    def ask(self, question):
+        response = self._find_best_match(question)
+        if response:
+            return response
+        else:
+            return "Desculpe, não entendi sua pergunta."
